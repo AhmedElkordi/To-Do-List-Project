@@ -366,7 +366,8 @@ class StudentTasksDialog(Toplevel):
         self.geometry("300x300")
         self.configure(bg='white')
 
-        self.layout = QVBoxLayout()  # تخطيط عمودي
+        # تخطيط عمودي
+        self.layout = Tk.Frame(self)
 
         # إضافة خيارات المهام الخاصة بالطالب
         options = [
@@ -378,11 +379,11 @@ class StudentTasksDialog(Toplevel):
         ]
 
         for i, option in enumerate(options):
-            button = Button(self, text=option, bg='white', fg='black', relief='raised', bd=2)  # إنشاء زر لكل خيار
+            button = Button(self.layout, text=option, bg='white', fg='black', relief='raised', bd=2)  # إنشاء زر لكل خيار
             button.config(command=lambda opt=option: self.open_add_task_dialog(opt))  # فتح نافذة إضافة مهمة
-            self.layout.addWidget(button, i)  # إضافة الزر إلى التخطيط
+            button.pack(pady=5)  # إضافة الزر إلى التخطيط
 
-        self.setLayout(self.layout)  # تعيين التخطيط
+        self.layout.pack(expand=True, fill='both')  # تعيين التخطيط
 
     def open_add_task_dialog(self, option):
         """فتح نافذة إضافة مهمة."""
@@ -402,7 +403,8 @@ class WorkTasksDialog(Toplevel):
         self.geometry("300x300")
         self.configure(bg='white')
 
-        self.layout = QVBoxLayout()  # تخطيط عمودي
+        # تخطيط عمودي
+        self.layout = Tk.Frame(self)
 
         # إضافة خيارات المهام الخاصة بالعمل
         options = [
@@ -415,11 +417,11 @@ class WorkTasksDialog(Toplevel):
         ]
 
         for i, option in enumerate(options):
-            button = Button(self, text=option, bg='white', fg='black', relief='raised', bd=2)  # إنشاء زر لكل خيار
+            button = Button(self.layout, text=option, bg='white', fg='black', relief='raised', bd=2)  # إنشاء زر لكل خيار
             button.config(command=lambda opt=option: self.open_add_task_dialog(opt))  # فتح نافذة إضافة مهمة
-            self.layout.addWidget(button, i)  # إضافة الزر إلى التخطيط
+            button.pack(pady=5)  # إضافة الزر إلى التخطيط
 
-        self.setLayout(self.layout)  # تعيين التخطيط
+        self.layout.pack(expand=True, fill='both')  # تعيين التخطيط
 
     def open_add_task_dialog(self, option):
         """فتح نافذة إضافة مهمة."""
@@ -484,13 +486,14 @@ class ToDoApp(Tk):
         self.search_box.bind("<KeyRelease>", self.search_task)
         self.search_box.pack(pady=5)
 
+        # Ensure the Reset button is packed correctly
         self.reset_button = Button(self, text=LANGUAGES[self.language]["Reset"], command=self.confirm_reset, font=self.font, bg='white', fg='black', relief='raised', bd=2)
         self.reset_button.pack(pady=5)
 
         self.task_lists = {}
         self.load_from_json()
 
-        # إضافة قائمة فرعية للمهام الغير منجزة والمهام المنجزة
+        # إضافة قائمة فرعية لمهام الغير منجزة والمهام المنجزة
         self.main_menu_list.insert(END, LANGUAGES[self.language]["Uncompleted Tasks"])
         self.main_menu_list.insert(END, LANGUAGES[self.language]["Completed Tasks"])
 
